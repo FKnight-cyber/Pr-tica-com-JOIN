@@ -39,19 +39,16 @@ AND e.status ILIKE 'finished';
 --Se ele estiver null (IS NULL), significa que a pessoa ainda não encerrou a experiência
 --dela na empresa, ou seja, está trabalhando lá.
 
-SELECT u.id as id, u.name, r.name as role, c.name as company, e."startDate"
-FROM companies c
-JOIN experiences e
-ON c.id = e."companyId"
-JOIN jobs j
-ON c.id = j."companyId"
-JOIN applicants a
-ON j.id = a."jobId"
-JOIN users u
-ON u.id = 50
+SELECT e."userId" as id, u.name, r.name as role, c.name as company, e."startDate"
+FROM experiences e
+JOIN companies c
+ON e."companyId" = c.id
 JOIN roles r
-ON j."roleId" = r.id
-WHERE e."endDate" IS NULL;
+ON e."roleId" = r.id
+join users u
+ON e."userId" = u.id
+WHERE e."endDate" IS NULL
+AND e."userId" = 50;
 
 --### Desafio Bônus
 --Utilizando uma *query*, obtenha a lista das diferentes escolas (`schools`)
